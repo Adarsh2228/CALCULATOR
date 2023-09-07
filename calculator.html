@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fancy Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            transition: background-color 0.3s; /* Add a smooth transition for background color change */
+        }
+
+        #calculator {
+            width: 300px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            transition: background-color 0.3s; /* Add a smooth transition for background color change */
+        }
+
+        #input-output {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        #input, #output {
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="calculator">
+        <div id="input-output">
+            <div id="input"></div>
+            <div id="output">0</div>
+        </div>
+        <div id="buttons">
+            <!-- Buttons go here -->
+            <button onclick="appendToInput('7')">7</button>
+            <button onclick="appendToInput('8')">8</button>
+            <button onclick="appendToInput('9')">9</button>
+            <button onclick="appendToInput('+')">+</button>
+            <button onclick="appendToInput('4')">4</button>
+            <button onclick="appendToInput('5')">5</button>
+            <button onclick="appendToInput('6')">6</button>
+            <button onclick="appendToInput('-')">-</button>
+            <button onclick="appendToInput('1')">1</button>
+            <button onclick="appendToInput('2')">2</button>
+            <button onclick="appendToInput('3')">3</button>
+            <button onclick="appendToInput('*')">*</button>
+            <button onclick="appendToInput('0')">0</button>
+            <button onclick="appendToInput('.')">.</button>
+            <button onclick="appendToInput('/')">/</button> <!-- Added division button -->
+            <button onclick="calculate()">=</button>
+            <button id="reset-button" onclick="reset()">C</button>
+        </div>
+    </div>
+
+    <script>
+        let inputField = document.getElementById('input');
+        let outputField = document.getElementById('output');
+        let currentColor = 0;
+
+        function appendToInput(value) {
+            if (inputField.innerHTML === '0' && value !== '.' && value !== '/') {
+                inputField.innerHTML = value;
+            } else {
+                inputField.innerHTML += value;
+            }
+            updateBackgroundColor();
+        }
+
+        function calculate() {
+            try {
+                const result = eval(inputField.innerHTML);
+                outputField.innerHTML = result;
+                if (!isNaN(result)) {
+                    currentColor = 150; // Change background color on valid result
+                } else {
+                    currentColor = 0; // Reset color if there's an error
+                }
+                updateBackgroundColor();
+            } catch (error) {
+                outputField.innerHTML = 'Error';
+            }
+        }
+
+        function reset() {
+            inputField.innerHTML = '';
+            outputField.innerHTML = '0';
+            currentColor = 0;
+            updateBackgroundColor();
+        }
+
+        function updateBackgroundColor() {
+            document.body.style.backgroundColor = `rgb(${currentColor}, ${currentColor}, ${currentColor})`;
+            outputField.style.backgroundColor = `rgb(${currentColor}, ${currentColor}, ${currentColor})`; // Change output field's background color
+        }
+    </script>
+</body>
+</html>
